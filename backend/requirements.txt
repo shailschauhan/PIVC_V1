@@ -1,0 +1,32 @@
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+pydantic-settings==2.7.0
+python-multipart==0.0.20
+pytest==8.3.4
+httpx==0.28.1
+numpy
+opencv-python-headless
+scipy
+timm
+torch
+torchvision
+pillow
+psycopg[binary]==3.2.3
+imageio-ffmpeg
+azure-storage-blob==12.31.0
+azure-identity==1.26.0
+cryptography==50.0.2
+# --- vital signs (open-rppg). open-rppg itself is installed with `pip install --no-deps open-rppg==0.1.1`
+# (it declares full opencv-python, which would clash with opencv-python-headless above)
+jax==0.12.0
+keras==3.15.1
+onnxruntime==1.31.0
+heartpy==1.2.7
+einops==0.8.2
+av==19.0.1
+h5py==3.16.0
+setuptools<81
+
+reportlab==5.0.1
+mssql-python==1.16.0

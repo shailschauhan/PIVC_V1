@@ -1,0 +1,30 @@
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.db
+backend/storage/
+.env
+models/*.pth
+backend/models/
+age_worker.log
+backend/age_worker.log
+.venv-age/
+backend/.venv-age/
+backend/models/
+
+services/.venv/
+services/face_match/models/*.onnx
+services/liveness/models/face_detection_yunet_2023mar.onnx
+services/liveness/tools/upstream_pth/
+**/.pytest_cache/
+
+# local / generated
+backend/test_storage/
+backend/*.log
+*.log
+backend/scratch*
+frontend/dist/
+.pytest_cache/
+source files/
+frontend/x_*.png

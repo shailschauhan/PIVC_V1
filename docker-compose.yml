@@ -1,0 +1,35 @@
+# Put TLS in front of this (reverse proxy) before exposing it. Sign-in is built in; set ADMIN_USERNAME / ADMIN_PASSWORD below.
+services:
+  face-match:
+    build: ./services/face_match
+    environment:
+      FACE_MATCH_API_KEYS: ${FACE_MATCH_API_KEY:?set FACE_MATCH_API_KEY}
+  liveness:
+    build: ./services/liveness
+    environment:
+      LIVENESS_API_KEYS: ${LIVENESS_API_KEY:?set LIVENESS_API_KEY}
+  backend:
+    build: ./backend
+    depends_on: [face-match, liveness]
+    environment:
+      FACE_MATCH_URL: http://face-match:8101
+      FACE_MATCH_API_KEY: ${FACE_MATCH_API_KEY}
+      LIVENESS_URL: http://liveness:8102
+      LIVENESS_API_KEY: ${LIVENESS_API_KEY}
+      SQL_CONNECTION_STRING: ${SQL_CONNECTION_STRING:?set SQL_CONNECTION_STRING (Azure SQL)}
+      SQL_SCHEMA: ${SQL_SCHEMA:-pivc}
+      STORAGE_DIR: /data/storage
+      APP_SECRET_KEY: ${APP_SECRET_KEY:?set APP_SECRET_KEY}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:?set ADMIN_USERNAME}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?set ADMIN_PASSWORD}
+      AUTHENTICITY_MODELS_DIR: /models
+      AUTHENTICITY_DATASET: ${AUTHENTICITY_DATASET:-dfdc}
+      AUTHENTICITY_MODELS: ${AUTHENTICITY_MODELS:-["TimmV2"]}
+    volumes:
+      - videos:/data/storage
+      - ./backend/models:/models:ro      # dfdc_v2.pth etc. - not baked into the image
+  frontend:
+    build: ./frontend
+    depends_on: [backend]
+    ports: ["8080:80"]
+volumes: { videos: {} }

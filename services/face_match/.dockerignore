@@ -1,0 +1,6 @@
+tests
+.venv
+__pycache__
+*.pyc
+.env
+tools/upstream_pth
